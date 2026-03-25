@@ -96,8 +96,7 @@
   draw_edges(edges, nodes, ..args)
 }
 
-#let draw_graph(path, curve: true, velocity: 0.1, ..figargs) = {
-  let data = json(path)
+#let draw_graph(data, curve: true, velocity: 0.1, ..figargs) = {
   let nodes = array_to_dict(parse_nodes(data.nodes), "id")
   let edges = array_to_dict(data.edges, "id")
 
