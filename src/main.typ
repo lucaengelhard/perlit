@@ -2,7 +2,7 @@
 #import "utils/data.typ": array_to_dict, parse_nodes
 #import "utils/components.typ": label
 
-#let draw_nodes(nodes) = {
+#let draw_nodes(nodes, ..args) = {
   import draw: *
   for (id, node) in nodes {
     rect((node.x, node.y), (node.bx, node.by), stroke: black)
@@ -15,7 +15,7 @@
   }
 }
 
-#let draw_edges(edges, nodes) = {
+#let draw_edges(edges, nodes, curve: bool, ..args) = {
   import draw: *
 
   let side_map = (
@@ -72,22 +72,40 @@
     let target = get_target(edge, nodes)
     let ctrl_points = create_bezier_points(edge, nodes)
 
-    bezier(start, target, ctrl_points.start, ctrl_points.target, name: edge.id)
+    if curve {
+      bezier(start, target, ctrl_points.start, ctrl_points.target, name: edge.id)
+    } else {
+      line(start, ctrl_points.start, ctrl_points.target, target, name: edge.id)
+    }
+
+
     if "label" in edge { label((edge.id + ".start", 50%, edge.id + ".end"), edge.label) }
   }
 }
 
-#let render(nodes, edges) = {
-  draw_nodes(nodes)
-  draw_edges(edges, nodes)
+#let render(nodes, edges, ..args) = {
+  draw_nodes(nodes, ..args)
+  draw_edges(edges, nodes, ..args)
 }
 
-#let draw_graph(path) = {
+#let draw_graph(path, curve: false, ..figargs) = {
   let data = json(path)
   let nodes = array_to_dict(parse_nodes(data.nodes), "id")
   let edges = array_to_dict(data.edges, "id")
 
+  let args = (curve: curve)
 
-  figure(layout(ly => canvas(length: ly.width, debug: false, render(nodes, edges))))
+  figure(
+    layout(ly => canvas(
+      length: ly.width,
+      debug: false,
+      render(
+        nodes,
+        edges,
+        ..args,
+      ),
+    )),
+    ..figargs,
+  )
 }
 
