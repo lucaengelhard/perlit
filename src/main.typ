@@ -1,5 +1,5 @@
 #import "@preview/cetz:0.4.2": canvas, draw
-#import "utils/data.typ": array_to_dict, parse_nodes
+#import "utils/helpers.typ": array_to_dict, parse_nodes
 #import "utils/components.typ": label
 
 #let draw_nodes(nodes, ..args) = {
@@ -43,26 +43,34 @@
     }
   }
 
-  let create_bezier_points(edge, nodes) = {
+  let create_bezier_points(edge, nodes, velocity: float) = {
     let start = get_start(edge, nodes)
     let target = get_target(edge, nodes)
 
-    let midX = (start.at(0) + target.at(0)) / 2
-    let midY = (start.at(1) + target.at(1)) / 2
+    let get_velocity(point, side) = {
+      let velocity_map = (
+        "top": (point.at(0), point.at(1) + velocity),
+        "bottom": (point.at(0), point.at(1) - velocity),
+        "left": (point.at(0) - velocity, point.at(1)),
+        "right": (point.at(0) + velocity, point.at(1)),
+      )
 
-    let bezier_start = if edge.fromSide == "top" or edge.fromSide == "bottom" {
-      (start.at(0), midY)
-    } else {
-      (midX, start.at(1))
+      velocity_map.at(side)
     }
 
-    let bezier_target = if edge.toSide == "top" or edge.toSide == "bottom" {
-      (target.at(0), midY)
-    } else {
-      (midX, target.at(1))
+    let start_ctrl = get_velocity(start, edge.fromSide)
+    let target_ctrl = get_velocity(target, edge.toSide)
+
+
+    let get_mid_ctl() = {
+      ()
     }
 
-    (start: bezier_start, target: bezier_target)
+    (
+      start: start_ctrl,
+      mid: get_mid_ctl(),
+      target: target_ctrl,
+    )
   }
 
   for (id, edge) in edges {
@@ -70,12 +78,12 @@
 
     let start = get_start(edge, nodes)
     let target = get_target(edge, nodes)
-    let ctrl_points = create_bezier_points(edge, nodes)
+    let ctrl_points = create_bezier_points(edge, nodes, ..args)
 
     if curve {
       bezier(start, target, ctrl_points.start, ctrl_points.target, name: edge.id)
     } else {
-      line(start, ctrl_points.start, ctrl_points.target, target, name: edge.id)
+      line(start, ctrl_points.start, ctrl_points.mid, ctrl_points.target, target, name: edge.id)
     }
 
 
@@ -88,12 +96,12 @@
   draw_edges(edges, nodes, ..args)
 }
 
-#let draw_graph(path, curve: false, ..figargs) = {
+#let draw_graph(path, curve: true, velocity: 0.1, ..figargs) = {
   let data = json(path)
   let nodes = array_to_dict(parse_nodes(data.nodes), "id")
   let edges = array_to_dict(data.edges, "id")
 
-  let args = (curve: curve)
+  let args = (curve: curve, velocity: if velocity == 0 { 0.00000001 } else { velocity })
 
   figure(
     layout(ly => canvas(
