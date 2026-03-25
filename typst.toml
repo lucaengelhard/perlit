@@ -1,0 +1,8 @@
+[package]
+name = "obsgraph"
+version = "0.0.1"
+entrypoint = "lib.typ"
+authors = ["Luca Engelhard"]
+license = "MIT"
+description = "Simple renderer for obsidian graphs"
+repository = "https://github.com/lucaengelhard/typst-obsidian-graph"
