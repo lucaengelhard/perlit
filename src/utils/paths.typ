@@ -147,6 +147,127 @@
         )
       }
     }
+
+
+    if edge.fromSide == "right" and edge.toSide == "top" {
+      if ctrl_points.start.at(1) > ctrl_points.target.at(1) and ctrl_points.start.at(0) < target.at(0) {
+        (
+          start: ctrl_points.start,
+          target: (ctrl_points.target.at(0), ctrl_points.start.at(1)),
+        )
+      } else {
+        (
+          start: ctrl_points.start,
+          mid: (ctrl_points.start.at(0), ctrl_points.target.at(1)),
+          target: ctrl_points.target,
+        )
+      }
+    }
+
+    if edge.fromSide == "top" and edge.toSide == "right" {
+      if ctrl_points.start.at(1) < ctrl_points.target.at(1) and ctrl_points.start.at(0) > target.at(0) {
+        (
+          start: ctrl_points.start,
+          target: (ctrl_points.start.at(0), ctrl_points.target.at(1)),
+        )
+      } else {
+        (
+          start: ctrl_points.start,
+          mid: (ctrl_points.target.at(0), ctrl_points.start.at(1)),
+          target: ctrl_points.target,
+        )
+      }
+    }
+
+    if edge.fromSide == "left" and edge.toSide == "top" {
+      if ctrl_points.start.at(1) > ctrl_points.target.at(1) and ctrl_points.start.at(0) > target.at(0) {
+        (
+          start: ctrl_points.start,
+          target: (ctrl_points.target.at(0), ctrl_points.start.at(1)),
+        )
+      } else {
+        (
+          start: ctrl_points.start,
+          mid: (ctrl_points.start.at(0), ctrl_points.target.at(1)),
+          target: ctrl_points.target,
+        )
+      }
+    }
+
+    if edge.fromSide == "top" and edge.toSide == "left" {
+      if ctrl_points.start.at(1) < ctrl_points.target.at(1) and ctrl_points.start.at(0) < target.at(0) {
+        (
+          start: ctrl_points.start,
+          target: (ctrl_points.start.at(0), ctrl_points.target.at(1)),
+        )
+      } else {
+        (
+          start: ctrl_points.start,
+          mid: (ctrl_points.target.at(0), ctrl_points.start.at(1)),
+          target: ctrl_points.target,
+        )
+      }
+    }
+
+    if (edge.fromSide == "right" and edge.toSide == "bottom") {
+      if ctrl_points.start.at(1) < ctrl_points.target.at(1) and ctrl_points.start.at(0) < target.at(0) {
+        (
+          start: ctrl_points.start,
+          target: (ctrl_points.target.at(0), ctrl_points.start.at(1)),
+        )
+      } else {
+        (
+          start: ctrl_points.start,
+          mid: (ctrl_points.start.at(0), ctrl_points.target.at(1)),
+          target: ctrl_points.target,
+        )
+      }
+    }
+
+    if (edge.fromSide == "bottom" and edge.toSide == "right") {
+      if ctrl_points.start.at(1) > ctrl_points.target.at(1) and ctrl_points.start.at(0) > target.at(0) {
+        (
+          start: ctrl_points.start,
+          target: (ctrl_points.start.at(0), ctrl_points.target.at(1)),
+        )
+      } else {
+        (
+          start: ctrl_points.start,
+          mid: (ctrl_points.target.at(0), ctrl_points.start.at(1)),
+          target: ctrl_points.target,
+        )
+      }
+    }
+
+    if edge.fromSide == "left" and edge.toSide == "bottom" {
+      if ctrl_points.start.at(1) < ctrl_points.target.at(1) and ctrl_points.start.at(0) > target.at(0) {
+        (
+          start: ctrl_points.start,
+          target: (ctrl_points.target.at(0), ctrl_points.start.at(1)),
+        )
+      } else {
+        (
+          start: ctrl_points.start,
+          mid: (ctrl_points.start.at(0), ctrl_points.target.at(1)),
+          target: ctrl_points.target,
+        )
+      }
+    }
+
+    if (edge.fromSide == "bottom" and edge.toSide == "left") {
+      if ctrl_points.start.at(1) > ctrl_points.target.at(1) and ctrl_points.start.at(0) < target.at(0) {
+        (
+          start: ctrl_points.start,
+          target: (ctrl_points.start.at(0), ctrl_points.target.at(1)),
+        )
+      } else {
+        (
+          start: ctrl_points.start,
+          mid: (ctrl_points.target.at(0), ctrl_points.start.at(1)),
+          target: ctrl_points.target,
+        )
+      }
+    }
   }
 
   (
