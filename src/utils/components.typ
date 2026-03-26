@@ -1,14 +1,14 @@
 #import "@preview/cetz:0.4.2": draw
-#let label(pos, text) = {
+#let label(pos, text, color) = {
   import draw: *
   content(
     pos,
     box(
       fill: white,
-      inset: 2pt,
-      stroke: none,
+      inset: 4.5pt,
+      stroke: color,
       text,
     ),
-    anchor: "center",
+    anchor: "west",
   )
 }

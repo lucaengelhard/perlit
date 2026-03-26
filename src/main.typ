@@ -1,16 +1,21 @@
 #import "@preview/cetz:0.4.2": canvas, draw
-#import "utils/helpers.typ": array_to_dict, parse_nodes
+#import "utils/helpers.typ": array_to_dict, bezier_at, get_color, line_at, parse_nodes
 #import "utils/components.typ": label
 
 #let draw_nodes(nodes, ..args) = {
   import draw: *
   for (id, node) in nodes {
-    rect((node.x, node.y), (node.bx, node.by), stroke: black)
+    rect(
+      (node.x, node.y),
+      (node.bx, node.by),
+      stroke: get_color(node),
+      fill: get_color(node).lighten(90%),
+    )
 
     if node.type == "text" {
       content(node.anchors.center, node.text)
     } else if node.type == "group" {
-      label(node.anchors.southwest, node.label)
+      label(node.anchors.northwest, node.label, get_color(node))
     }
   }
 }
@@ -81,13 +86,41 @@
     let ctrl_points = create_bezier_points(edge, nodes, ..args)
 
     if curve {
-      bezier(start, target, ctrl_points.start, ctrl_points.target, name: edge.id)
+      bezier(
+        start,
+        target,
+        ctrl_points.start,
+        ctrl_points.target,
+        name: edge.id,
+        stroke: get_color(edge),
+      )
+
+      if "label" in edge {
+        label(
+          bezier_at(start, ctrl_points.start, ctrl_points.target, target, 0.5),
+          edge.label,
+          get_color(edge),
+        )
+      }
     } else {
-      line(start, ctrl_points.start, ctrl_points.mid, ctrl_points.target, target, name: edge.id)
+      line(
+        start,
+        ctrl_points.start,
+        ctrl_points.mid,
+        ctrl_points.target,
+        target,
+        name: edge.id,
+        stroke: get_color(edge),
+      )
+
+      if "label" in edge {
+        label(
+          line_at((start, ctrl_points.start, ctrl_points.target), 0.5),
+          edge.label,
+          get_color(edge),
+        )
+      }
     }
-
-
-    if "label" in edge { label((edge.id + ".start", 50%, edge.id + ".end"), edge.label) }
   }
 }
 
