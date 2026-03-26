@@ -15,7 +15,7 @@
     if node.type == "text" {
       content(node.anchors.center, node.text)
     } else if node.type == "group" {
-      label(node.anchors.northwest, node.label, get_color(node))
+      label(node.anchors.northwest, node.label, get_color(node), justify: "west")
     }
   }
 }

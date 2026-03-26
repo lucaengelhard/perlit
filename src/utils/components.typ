@@ -1,5 +1,5 @@
 #import "@preview/cetz:0.4.2": draw
-#let label(pos, text, color) = {
+#let label(pos, text, color, justify: "center") = {
   import draw: *
   content(
     pos,
@@ -9,6 +9,6 @@
       stroke: color,
       text,
     ),
-    anchor: "west",
+    anchor: justify,
   )
 }
