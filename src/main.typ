@@ -9,7 +9,7 @@
       (node.x, node.y),
       (node.bx, node.by),
       stroke: get_color(node),
-      fill: get_color(node).lighten(90%),
+      fill: get_color(node).lighten(if node.type == "group" { 95% } else { 85% }),
     )
 
     if node.type == "text" {
