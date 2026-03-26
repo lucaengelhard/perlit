@@ -67,13 +67,8 @@
     let target_ctrl = get_velocity(target, edge.toSide)
 
 
-    let get_mid_ctl() = {
-      ()
-    }
-
     (
       start: start_ctrl,
-      mid: get_mid_ctl(),
       target: target_ctrl,
     )
   }
@@ -106,7 +101,6 @@
       line(
         start,
         ctrl_points.start,
-        ctrl_points.mid,
         ctrl_points.target,
         target,
         name: edge.id,
