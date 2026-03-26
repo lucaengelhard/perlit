@@ -1,6 +1,7 @@
 #import "@preview/cetz:0.4.2": canvas, draw
 #import "utils/helpers.typ": array_to_dict, bezier_at, get_color, line_at, parse_nodes
 #import "utils/components.typ": label
+#import "utils/paths.typ": beautify_paths
 
 #let draw_nodes(nodes, ..args) = {
   import draw: *
@@ -76,9 +77,13 @@
   for (id, edge) in edges {
     set_arrow(edge)
 
-    let start = get_start(edge, nodes)
-    let target = get_target(edge, nodes)
-    let ctrl_points = create_bezier_points(edge, nodes, ..args)
+
+    let (start, target, ctrl_points) = beautify_paths(
+      get_start(edge, nodes),
+      get_target(edge, nodes),
+      create_bezier_points(edge, nodes, ..args),
+      edge,
+    )
 
     if curve {
       bezier(
@@ -92,7 +97,13 @@
 
       if "label" in edge {
         label(
-          bezier_at(start, ctrl_points.start, ctrl_points.target, target, 0.5),
+          bezier_at(
+            start,
+            ctrl_points.start,
+            ctrl_points.target,
+            target,
+            0.5,
+          ),
           edge.label,
           get_color(edge),
         )
@@ -100,8 +111,7 @@
     } else {
       line(
         start,
-        ctrl_points.start,
-        ctrl_points.target,
+        ..ctrl_points.values(),
         target,
         name: edge.id,
         stroke: get_color(edge),
@@ -109,7 +119,7 @@
 
       if "label" in edge {
         label(
-          line_at((start, ctrl_points.start, ctrl_points.target), 0.5),
+          line_at((start, ..ctrl_points.values()), 0.5),
           edge.label,
           get_color(edge),
         )
