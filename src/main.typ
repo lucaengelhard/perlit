@@ -19,7 +19,6 @@
   recursive_caller: function,
   nested: false,
   length: length,
-  ..figargs,
 ) = {
   let args = (
     curve: curve,
@@ -38,21 +37,21 @@
   )
 
   if nested {
-    canvas(render(nodes, edges, ..args), length: length)
-  } else {
-    figure(
-      layout(ly => canvas(
-        length: ly.width,
-        debug: false,
-        render(
-          nodes,
-          edges,
-          length: ly.width,
-          ..args,
-        ),
-      )),
-      ..figargs,
+    canvas(
+      render(nodes, edges, ..args),
+      length: length,
     )
+  } else {
+    layout(ly => canvas(
+      length: ly.width,
+      debug: false,
+      render(
+        nodes,
+        edges,
+        length: ly.width,
+        ..args,
+      ),
+    ))
   }
 }
 
