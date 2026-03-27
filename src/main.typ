@@ -14,44 +14,32 @@
 
 #let draw_graph(
   data,
-  curve: true,
   velocity: 0.1,
-  recursive_caller: function,
   nested: false,
   length: length,
+  ..args,
 ) = {
-  let args = (
-    curve: curve,
-    velocity: if velocity == 0 { 0.00000001 } else { velocity },
-    recursive_caller: recursive_caller,
-  )
+  let safe_velocity = if velocity == 0 { 0.00000001 } else { velocity }
 
   let nodes = array_to_dict(parse_nodes(data.nodes), "id")
   let edges = array_to_dict(
     parse_edges(
       data.edges,
       nodes,
-      velocity: args.velocity,
+      velocity: safe_velocity,
     ),
     "id",
   )
 
-  if nested {
+
+  layout(ly => {
+    let nomalized_length = if nested { length } else { ly.width }
     canvas(
-      render(nodes, edges, ..args),
-      length: length,
-    )
-  } else {
-    layout(ly => canvas(
-      length: ly.width,
+      length: nomalized_length,
       debug: false,
-      render(
-        nodes,
-        edges,
-        length: ly.width,
-        ..args,
-      ),
-    ))
-  }
+      render(nodes, edges, length: nomalized_length, ..args),
+    )
+  })
 }
+
 
