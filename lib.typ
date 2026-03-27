@@ -2,6 +2,6 @@
 
 /*
 TODO:
-	- Colors
-	- Better edge resolving
+	- Layers (Edges behind labels (also behind nodes??))
+	- Other media?
  */

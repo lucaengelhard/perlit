@@ -1,7 +1,8 @@
 #import "@preview/cetz:0.4.2": canvas, draw
-#import "utils/helpers.typ": array_to_dict, bezier_at, get_color, line_at, parse_nodes
+#import "utils/helpers.typ": array_to_dict, get_color, get_needed_file_path, parse_nodes
 #import "utils/components.typ": label
-#import "utils/paths.typ": beautify_paths
+#import "utils/paths.typ": beautify_paths, bezier_at, line_at
+#import "utils/files.typ": handle_file
 
 #let draw_nodes(nodes, ..args) = {
   import draw: *
@@ -17,6 +18,8 @@
       content(node.anchors.center, node.text)
     } else if node.type == "group" {
       label(node.anchors.northwest, node.label, get_color(node), justify: "west")
+    } else if node.type == "file" {
+      content(node.anchors.center, handle_file(node))
     }
   }
 }
