@@ -52,17 +52,10 @@
 #let draw_edges(edges, nodes, curve: bool, ..args) = {
   import draw: *
 
-
   for (id, edge) in edges {
     set_arrow(edge)
 
-
-    let (start, target, ctrl_points) = beautify_paths(
-      get_start(edge, nodes),
-      get_target(edge, nodes),
-      create_bezier_points(edge, nodes, ..args),
-      edge,
-    )
+    let (start, target, ctrl_points) = edge
 
     if curve {
       bezier(
@@ -73,20 +66,6 @@
         name: edge.id,
         stroke: get_color(edge),
       )
-
-      if "label" in edge {
-        label(
-          bezier_at(
-            start,
-            ctrl_points.start,
-            ctrl_points.target,
-            target,
-            0.5,
-          ),
-          edge.label,
-          get_color(edge),
-        )
-      }
     } else {
       line(
         start,
@@ -95,14 +74,18 @@
         name: edge.id,
         stroke: get_color(edge),
       )
-
-      if "label" in edge {
-        label(
-          line_at((start, ..ctrl_points.values()), 0.5),
-          edge.label,
-          get_color(edge),
-        )
-      }
     }
   }
+}
+
+#let parse_edges(edges, nodes, ..args) = {
+  edges.map(edge => (
+    edge
+      + beautify_paths(
+        get_start(edge, nodes),
+        get_target(edge, nodes),
+        create_bezier_points(edge, nodes, ..args),
+        edge,
+      )
+  ))
 }
