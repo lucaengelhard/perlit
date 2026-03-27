@@ -132,8 +132,8 @@
 }
 
 #let render(nodes, edges, ..args) = {
-  draw_nodes(nodes, ..args)
   draw_edges(edges, nodes, ..args)
+  draw_nodes(nodes, ..args)
 }
 
 #let draw_graph(data, curve: true, velocity: 0.1, ..figargs) = {
