@@ -12,10 +12,19 @@
   draw_labels(edges, ..args)
 }
 
-#let draw_graph(data, curve: true, velocity: 0.1, ..figargs) = {
+#let draw_graph(
+  data,
+  curve: true,
+  velocity: 0.1,
+  recursive_caller: function,
+  nested: false,
+  length: length,
+  ..figargs,
+) = {
   let args = (
     curve: curve,
     velocity: if velocity == 0 { 0.00000001 } else { velocity },
+    recursive_caller: recursive_caller,
   )
 
   let nodes = array_to_dict(parse_nodes(data.nodes), "id")
@@ -28,18 +37,22 @@
     "id",
   )
 
-
-  figure(
-    layout(ly => canvas(
-      length: ly.width,
-      debug: false,
-      render(
-        nodes,
-        edges,
-        ..args,
-      ),
-    )),
-    ..figargs,
-  )
+  if nested {
+    canvas(render(nodes, edges, ..args), length: length)
+  } else {
+    figure(
+      layout(ly => canvas(
+        length: ly.width,
+        debug: false,
+        render(
+          nodes,
+          edges,
+          length: ly.width,
+          ..args,
+        ),
+      )),
+      ..figargs,
+    )
+  }
 }
 

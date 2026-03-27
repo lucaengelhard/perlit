@@ -1,4 +1,4 @@
-#import "../utils/paths.typ": line_at
+#import "../utils/paths.typ": bezier_at, line_at
 #import "../utils/helpers.typ": get_color
 #import "../utils/components.typ": label
 

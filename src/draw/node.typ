@@ -11,7 +11,9 @@
       (node.x, node.y),
       (node.bx, node.by),
       stroke: get_color(node),
-      fill: if node.type == "group" { get_color(node).transparentize(95%) } else { get_color(node).lighten(85%) },
+      fill: if node.type == "file" {} else if node.type == "group" { get_color(node).transparentize(95%) } else {
+        get_color(node).lighten(85%)
+      },
     )
 
     if node.type == "text" {
