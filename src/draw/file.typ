@@ -1,6 +1,6 @@
 #import "../utils/helpers.typ": get_file_name
 
-#let handle_canvas(path, recursive_caller: function, ..args) = {
+#let handle_canvas(path, recursive_caller: (..args) => {}, ..args) = {
   recursive_caller(path, ..args)
 }
 
