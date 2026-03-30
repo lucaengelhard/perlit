@@ -37,7 +37,7 @@ jobs:
       - name: update typst.toml
         run: sed -i "s/^version = \".*\"/version = \"${{ steps.vars.outputs.tag }}\"/" packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}/typst.toml
       - name: update README.md
-        run: sed -i "s/@preview\/perlit:[0-9]\+\.[0-9]\+\.[0-9]\+/@preview\/perlit:$TAG/g" packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}/README.md
+        run: sed -i "s/@preview\/perlit:[0-9]\+\.[0-9]\+\.[0-9]\+/@preview\/perlit:${{ steps.vars.outputs.tag }}/g" packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}/README.md
       - name: create PR
         run: |
           ls -ln packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
