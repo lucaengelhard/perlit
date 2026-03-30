@@ -9,24 +9,19 @@ on:
         required: true
         default: "0.0.1"
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   release:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: repo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: ${{ github.repository_owner }}/packages
           path: packages
-          token: ${{ env.GITHUB_TOKEN }}
       - name: Determine release tag
         id: vars
         run: |
