@@ -6,10 +6,6 @@
   path.split(".").last()
 }
 
-#let handle_canvas(path, recursive_caller: (..args) => {}, ..args) = {
-  recursive_caller(path, ..args)
-}
-
 #let handle_file(node, file-handlers: (:), ..args) = {
   let ext = get_file_ext(node.file)
 
