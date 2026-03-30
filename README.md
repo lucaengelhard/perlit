@@ -10,18 +10,18 @@ Perlit is a library for rendering [Obsidian](https://obsidian.md/) graphs in [Ty
 #draw(json("/example.canvas"))
 ```
 
-<img src="gallery/simple-obsidian.png">
-<img src="gallery/simple-typst.png">
+<img src="gallery/simple-obsidian.png" alt="simple obsidian graph">
+<img src="gallery/simple-typst.png" alt="simple graph rendered in typst">
 
 To use this package, simply import and call the `draw` function with the loaded json of the graph you want to render. For security reasons, typst cannot read files outside of the documents' root directory. For more information, read the [typst docs](https://typst.app/docs/reference/syntax/#paths-and-packages).
 
 <table>
 	<tr>
 		<td>
-			<img src="gallery/group-edges-obsidian.png">
+			<img src="gallery/group-edges-obsidian.png" alt="different graph features in obsidian">
 		</td>
 		<td>
-			<img src="gallery/group-edges-typst.png">
+			<img src="gallery/group-edges-typst.png" alt="different graph features rendered in typst">
 		</td>
 	</tr>
 </table>
@@ -30,39 +30,38 @@ To use this package, simply import and call the `draw` function with the loaded 
 
 Obsidian graphs can contain files like images and pdfs. As typst doesn't allow loading files from outside the project root, the loading of the files needs to be handled by the user.
 
-> [!IMPORTANT]
-> Currently files need to be directly in the root directory of the document to be available to the graph in typst.
+*IMPORTANT: Currently files need to be directly in the root directory of the document to be available to the graph in typst*
 
 ### Images
 ```typ
-#import "lib.typ": draw
+#import "@preview/perlit:0.0.1": draw
 
 #draw(
   json("/testgraph.canvas"),
   velocity: 0.1,
   curve: false,
-  file_handlers: (
+  file-handlers: (
     "jpg": (node, path: str, length: length, ..args) => {
       image(path, width: node.width * length)
     },
   ),
 )
 ```
-<img src="gallery/image-obisidian.png">
-<img src="gallery/image-typst.png">
+<img src="gallery/image-obisidian.png" alt="imported image in obsidian">
+<img src="gallery/image-typst.png" alt="imported image rendered in typst">
 
 ### Other Graphs
 
 This also means that other graphs can be imported into the graph:
 
 ```typ
-#import "lib.typ": draw
+#import "@preview/perlit:0.0.1": draw
 
 #draw(
   json("/testgraph.canvas"),
   velocity: 0.1,
   curve: false,
-  file_handlers: (
+  file-handlers: (
     "canvas": (node, path: str, length: length, ..args) => {
       draw(json(path), nested: true, length: node.width * length * 0.9, ..args)
     },
@@ -72,10 +71,10 @@ This also means that other graphs can be imported into the graph:
 <table>
 	<tr>
 		<td>
-			<img src="gallery/nested-obisidian.png">
+			<img src="gallery/nested-obisidian.png" alt="nested graph in obsidian">
 		</td>
 		<td>
-			<img src="gallery/nested-typst.png">
+			<img src="gallery/nested-typst.png" alt="nested graph rendered in typst">
 		</td>
 	</tr>
 </table>
