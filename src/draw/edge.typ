@@ -49,7 +49,7 @@
   )
 }
 
-#let draw_edges(edges, nodes, curve: bool, ..args) = {
+#let draw_edges(edges, nodes, curve: false, ..args) = {
   import draw: *
 
   for (id, edge) in edges {
