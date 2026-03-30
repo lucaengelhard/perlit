@@ -34,10 +34,3 @@
   }
 }
 
-#let get_file_name(path) = {
-  path.split("/").last()
-}
-
-#let get_needed_file_path(path) = {
-  "/obsgraph/files/" + get_file_name(path)
-}
