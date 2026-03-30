@@ -1,8 +1,11 @@
 [package]
-name = "obsgraph"
+name = "perlit"
 version = "0.0.1"
 entrypoint = "lib.typ"
-authors = ["Luca Engelhard"]
-license = "MIT"
-description = "Simple renderer for obsidian graphs"
-repository = "https://github.com/lucaengelhard/typst-obsidian-graph"
+authors = ["Luca Engelhard <https://github.com/lucaengelhard>"]
+license = "The Unlicense"
+description = "Render Obsidian graphs using CeTZ."
+repository = "https://github.com/lucaengelhard/perlit"
+categories = [ "visualization" ]
+keywords = [ "draw", "canvas", "tree", "obsidian" ]
+exclude = [ "/gallery/*" ]
