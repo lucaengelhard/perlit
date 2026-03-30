@@ -40,4 +40,5 @@ jobs:
         run: sed -i "s/@preview\/perlit:[0-9]\+\.[0-9]\+\.[0-9]\+/@preview\/perlit:$TAG/g" packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}/README.md
       - name: create PR
         run: |
-          ls -ln packages/packages/preview
+          ls -ln packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
+          cat packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}/README.md
