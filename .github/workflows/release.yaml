@@ -16,6 +16,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           path: repo
+      - name: Determine release tag
+        id: vars
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
       - name: checkout package repo
         run: |
           git clone --depth 1 --no-checkout --filter="tree:0" https://github.com/${{ github.repository_owner }}/packages.git
@@ -27,7 +32,7 @@ jobs:
           git checkout main
       - name: copy files into packages repo
         run: |
-          mkdir -p packages/packages/preview/perlit/${{ github.events.release.tag_name }}
-          cp -a repo/* packages/packages/preview/perlit/${{ github.events.release.tag_name }}*
-          ls -ln  packages/packages/preview/perlit/${{ github.events.release.tag_name }}
-          cat packages/packages/preview/perlit/${{ github.events.release.tag_name }}
+          mkdir -p packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
+          cp -a repo/* packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
+          ls -ln  packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
+          cat packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
