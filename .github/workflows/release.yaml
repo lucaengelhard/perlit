@@ -34,5 +34,5 @@ jobs:
         run: |
           mkdir -p packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
           cp -a repo/* packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}*
-          ls -ln  packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
-          cat packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
+          ls -lna  packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
+          cat packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}/typst.toml
