@@ -40,6 +40,7 @@ jobs:
         run: sed -i "s/@preview\/perlit:[0-9]\+\.[0-9]\+\.[0-9]\+/@preview\/perlit:${{ steps.vars.outputs.tag }}/g" packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}/README.md
       - name: Create PR
         uses: peter-evans/create-pull-request@v5
+        working-directory: packages
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Update perlit preview to ${{ steps.vars.outputs.tag }}"
