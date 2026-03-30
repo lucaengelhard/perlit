@@ -49,5 +49,5 @@ jobs:
           body: |
             This PR updates the `perlit` preview to version `${{ steps.vars.outputs.tag }}`.
             Files copied from the main repository.
-          path: "packages
+          path: "packages"
 
