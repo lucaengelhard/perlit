@@ -35,4 +35,5 @@ jobs:
           mkdir -p packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
           cp -a repo/* packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}*
           ls -lna  packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
+          sed -i "s/^version = \".*\"/version = \"${{ steps.vars.outputs.tag }}\"/" packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}/typst.toml
           cat packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}/typst.toml
