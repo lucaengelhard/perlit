@@ -33,6 +33,6 @@ jobs:
       - name: copy files into packages repo
         run: |
           mkdir -p packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
-          cp -a repo/* packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
+          cp -a repo/* packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}*
           ls -ln  packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
           cat packages/packages/preview/perlit/${{ steps.vars.outputs.tag }}
