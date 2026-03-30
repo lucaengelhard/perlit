@@ -11,5 +11,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           path: repo
-      - name: list
-        run: ls repo
+      - name: checkout package repo
+        run: |
+          git clone --depth 1 --no-checkout --filter="tree:0" https://github.com:lucaengelhard/packages
+          cd packages
+          git sparse-checkout init
+          git sparse-checkout set packages/preview/perlit
+          git remote add upstream git@github.com:typst/packages
+          git config remote.upstream.partialclonefilter tree:0
+          git checkout main
+      - name: move files into packages repo
+        run: ls packages
