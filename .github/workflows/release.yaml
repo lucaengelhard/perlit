@@ -29,4 +29,5 @@ jobs:
         run: |
           mkdir -p packages/packages/preview/perlit/${{ github.events.release.tag_name }}
           cp -a repo/* packages/packages/preview/perlit/${{ github.events.release.tag_name }}
-          ls  packages/packages/preview/perlit/${{ github.events.release.tag_name }}
+          ls -ln  packages/packages/preview/perlit/${{ github.events.release.tag_name }}
+          cat packages/packages/preview/perlit/${{ github.events.release.tag_name }}
