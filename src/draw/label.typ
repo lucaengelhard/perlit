@@ -2,7 +2,7 @@
 #import "../utils/helpers.typ": get_color
 #import "../utils/components.typ": label
 
-#let draw_labels(edges, curve: bool, ..args) = {
+#let draw_labels(edges, curve: false, ..args) = {
   for (id, edge) in edges {
     if "label" in edge {
       let (start, target, ctrl_points) = edge
