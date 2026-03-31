@@ -6,11 +6,11 @@
   path.split(".").last()
 }
 
-#let handle_file(node, file_handlers: (:), length: length, ..args) = {
+#let handle_file(node, file-handlers: (:), length: length, ..args) = {
   let ext = get_file_ext(node.file)
 
-  if ext in file_handlers {
-    file_handlers.at(ext)(
+  if ext in file-handlers {
+    file-handlers.at(ext)(
       node: node,
       path: get_file_name(node.file),
       length: node.width * length,

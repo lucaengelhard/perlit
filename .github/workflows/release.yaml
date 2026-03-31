@@ -1,0 +1,32 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. 1.2.3)"
+        required: true
+        default: "0.0.1"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      tag: ${{ github.event.release.tag_name || inputs.tag }}
+      package: perlit
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: repo
+      - name: Checkout packages and set up upstream
+        uses: actions/checkout@v4
+        with:
+          path: packages
+          repository: lucaengelhard/packages
+          sparse-checkout: packages/preview/${{ env.package }}
+      - run: |
+          cd packages
+          git remote add upstream git@github.com:typst/packages
+          git config remote.upstream.partialclonefilter tree:0
+          git checkout main
+      - run: ls packages/packages/preview/${{ env.package }}
