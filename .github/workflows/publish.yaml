@@ -67,14 +67,3 @@ jobs:
           git add --sparse "packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
           git commit -m "update ${{ env.package }} to ${{ env.tag }}" || echo "No changes to commit"
           git push origin "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}" --force
-
-      - name: Create PR
-        env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        run: |
-          cd packages
-
-          gh pr create --title "${{ env.package }} | ${{ env.tag }}" \
-                       --body "update ${{ env.package }} to ${{ env.tag }}" \
-                       --head "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}" \
-                       --base main
