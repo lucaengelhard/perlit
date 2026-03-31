@@ -72,6 +72,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
+          cd packages
+          
           gh pr create --title "${{ env.package }} | ${{ env.tag }}" \
                        --body "update ${{ env.package }} to ${{ env.tag }}" \
                        --head "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}" \
