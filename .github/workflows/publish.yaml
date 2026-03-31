@@ -1,0 +1,64 @@
+name: Publish
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. 1.2.3)"
+        required: true
+        default: "0.0.1"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      namespace: preview
+      package: perlit
+      tag: ${{ github.event.release.tag_name || inputs.tag }}
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v6
+        with:
+          path: source
+          ref: ${{ env.tag }}
+
+      - name: Clone typst packages
+        uses: actions/checkout@v6
+        with:
+          path: packages
+          repository: lucaengelhard/packages
+          sparse-checkout: packages/preview/${{ env.package }}
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Create release branch
+        run: |
+          cd packages
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
+      
+      - name: Copy source
+        run: |
+          mkdir -p "packages/packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
+          cp -a source/* "packages/packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
+
+      - name: Commit and push Changes
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          cd packages
+          git add .
+          git commit -m "update ${{ env.package }} to ${{ env.tag }}"
+          git push origin "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
+
+      - name: Create PR
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          gh pr create --title "${{ env.package }} | ${{ env.tag }}" \
+                       --body update ${{ env.package }} to ${{ env.tag }}" \
+                       --head "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}" \
+                       --base main

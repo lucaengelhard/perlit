@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 jobs:
-  test:
+  release:
     runs-on: ubuntu-latest
     env:
       tag: ${{ github.event.release.tag_name || inputs.tag }}
@@ -44,26 +44,5 @@ jobs:
           git commit -m "Update semver" || echo "No changes to commit"
 
           git push
-
-
-         # - name: Checkout packages and set up upstream
-      #   uses: actions/checkout@v4
-      #   with:
-      #     path: packages
-      #     repository: lucaengelhard/packages
-      #     sparse-checkout: packages/preview/${{ env.package }}
-      # - name: Check if version exists
-      #   run: |
-      #     if [ -d ${{ env.path }} ]; then
-      #       exit 1
-      #     fi 
-      # - name: Create release branch in fork repo
-      #   run: |
-      #     cd packages
-      #     git checkout -b release-${{ env.tag }}
-      # - name: Transfer files to package repo
-      #   run: |
-      #     mkdir -p ${{ env.path }}
-      #     cp -a repo/* ${{ env.path }}*
 
           
