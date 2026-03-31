@@ -17,6 +17,7 @@
   velocity: 0.1,
   nested: false,
   length: length,
+  scale: 1,
   ..args,
 ) = {
   let safe_velocity = if velocity == 0 { 0.00000001 } else { velocity }
@@ -33,7 +34,7 @@
 
 
   layout(ly => {
-    let nomalized_length = if nested { length } else { ly.width }
+    let nomalized_length = if nested { length } else { ly.width } * scale
     canvas(
       length: nomalized_length,
       debug: false,
