@@ -50,6 +50,8 @@ jobs:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           cd packages
+
+          git sparse-checkout disable
           git add .
           git commit -m "update ${{ env.package }} to ${{ env.tag }}"
           git push origin "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
