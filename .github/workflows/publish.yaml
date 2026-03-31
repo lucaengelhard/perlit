@@ -40,15 +40,21 @@ jobs:
 
           git checkout -b "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
 
-          VERSION_PATH="packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
+          TARGET_DIR="packages/packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
           git sparse-checkout add "$VERSION_PATH"
 
       - name: Copy source
         run: |
-          VERSION_PATH="packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
+          TARGET_DIR="packages/packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
 
-          mkdir -p "packages/$VERSION_PATH"
-          cp -ra source/* "packages/$VERSION_PATH/"
+          mkdir -p "$TARGET_DIR"
+          cp -ra source/* "$TARGET_DIR/"
+          rm -rf "$TARGET_DIR/.git"
+
+      - name: Debug File Structure
+        run: |
+          echo "Checking if files exist in the target directory:"
+          ls -R packages/packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}
 
       - name: Commit and push Changes
         env:
@@ -56,7 +62,9 @@ jobs:
         run: |
           cd packages
 
-          git add --sparse .
+          git sparse-checkout reapply
+
+          git add --sparse "packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
           git commit -m "update ${{ env.package }} to ${{ env.tag }}"
           git push origin "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
 
