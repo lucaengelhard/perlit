@@ -5,7 +5,7 @@ Perlit is a library for rendering [Obsidian](https://obsidian.md/) graphs in [Ty
 ## Usage
 
 ```typ
-#import "@preview/perlit:0.0.2": draw
+#import "@preview/perlit:0.0.1": draw
 
 #draw(json("/example.canvas"))
 ```
@@ -34,7 +34,7 @@ Obsidian graphs can contain files like images and pdfs. As typst doesn't allow l
 
 ### Images
 ```typ
-#import "@preview/perlit:0.0.2": draw
+#import "@preview/perlit:0.0.1": draw
 
 #draw(
   json("/testgraph.canvas"),
@@ -55,7 +55,7 @@ Obsidian graphs can contain files like images and pdfs. As typst doesn't allow l
 This also means that other graphs can be imported into the graph:
 
 ```typ
-#import "@preview/perlit:0.0.2": draw
+#import "@preview/perlit:0.0.1": draw
 
 #draw(
   json("/testgraph.canvas"),
