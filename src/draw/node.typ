@@ -27,7 +27,6 @@
 }
 
 #let parse_nodes(nodes) = {
-  // Extract all x and y values
   let min-x = calc.min(..nodes.map(n => n.x))
   let max-x = calc.max(..nodes.map(n => n.x + n.width))
   let min-y = calc.min(..nodes.map(n => n.y))
@@ -38,7 +37,6 @@
   let scale = calc.max(span-x, span-y)
 
 
-  // Safe normalization
   let norm(val, min) = {
     if scale == 0 { 0 } else { (val - min) / scale }
   }
@@ -67,7 +65,6 @@
     )
   }
 
-  // Apply normalization
   nodes
     .map(node => (
       node

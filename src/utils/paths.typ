@@ -301,7 +301,6 @@
   } else if points.len() == 1 {
     points.at(0)
   } else {
-    // Step 1: compute segment lengths
     let seg-lengths = ()
     let total = 0.0
 
@@ -317,10 +316,8 @@
       total += len
     }
 
-    // Step 2: target distance
     let target = t * total
 
-    // Step 3: walk segments
     let acc = 0.0
 
     for i in range(0, seg-lengths.len()) {
@@ -341,7 +338,6 @@
       acc += seg
     }
 
-    // Edge case: r == 1
     points.at(points.len() - 1)
   }
 }
