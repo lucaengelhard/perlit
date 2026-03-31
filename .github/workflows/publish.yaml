@@ -39,11 +39,16 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git checkout -b "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
-      
+
+          VERSION_PATH="packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
+          git sparse-checkout add "$VERSION_PATH"
+
       - name: Copy source
         run: |
-          mkdir -p "packages/packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
-          cp -a source/* "packages/packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
+          VERSION_PATH="packages/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
+
+          mkdir -p "packages/$VERSION_PATH"
+          cp -ra source/* "packages/$VERSION_PATH/"
 
       - name: Commit and push Changes
         env:
@@ -51,7 +56,6 @@ jobs:
         run: |
           cd packages
 
-          git sparse-checkout disable
           git add .
           git commit -m "update ${{ env.package }} to ${{ env.tag }}"
           git push origin "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}"
@@ -61,6 +65,6 @@ jobs:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           gh pr create --title "${{ env.package }} | ${{ env.tag }}" \
-                       --body update ${{ env.package }} to ${{ env.tag }}" \
+                       --body "update ${{ env.package }} to ${{ env.tag }}" \
                        --head "release/${{ env.namespace }}/${{ env.package }}/${{ env.tag }}" \
                        --base main
