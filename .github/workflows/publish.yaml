@@ -21,7 +21,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: source
-          ref: ${{ env.tag }}
 
       - name: Clone typst packages
         uses: actions/checkout@v4

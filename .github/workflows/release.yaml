@@ -45,7 +45,6 @@ jobs:
             LICENSE
             lib.typ
             typst.toml
-            examples/**/*
             src/**/*
       
 
