@@ -46,6 +46,6 @@ jobs:
             lib.typ
             typst.toml
             src/**/*
-      
+            !example/**
 
           
