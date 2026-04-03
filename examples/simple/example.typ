@@ -1,3 +1,3 @@
-#import "@preview/perlit:0.0.1": draw
+#import "@preview/perlit:0.0.2": draw
 
 #draw(json("/simple.canvas"))
