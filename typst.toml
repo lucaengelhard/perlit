@@ -8,4 +8,4 @@ description = "Render Obsidian graphs using CeTZ."
 repository = "https://github.com/lucaengelhard/perlit"
 categories = [ "visualization" ]
 keywords = [ "draw", "canvas", "tree", "obsidian" ]
-exclude = [ "/gallery/*" ]
+exclude = [ "/examples/*" ]

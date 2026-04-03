@@ -3,4 +3,4 @@
 *.jpg
 test.typ
 obsgraph
-!gallery/*.png
+!examples/**/*.png
