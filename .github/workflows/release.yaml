@@ -23,6 +23,8 @@ jobs:
         run: sed -i "s/^version = \".*\"/version = \"${{ env.tag }}\"/" typst.toml
       - name: Update README.md
         run: sed -i "s/@preview\/perlit:[0-9]\+\.[0-9]\+\.[0-9]\+/@preview\/perlit:${{ env.tag }}/g" README.md
+      - name: Update Examples
+        run: find examples/ -name "*.typ" -exec sed -i "s/@preview\/perlit:[0-9]\+\.[0-9]\+\.[0-9]\+/@preview\/perlit:${{ env.tag }}/g" {} +
       - name: Update Repo
         run: |
           git config user.name "github-actions[bot]"
@@ -43,7 +45,7 @@ jobs:
             LICENSE
             lib.typ
             typst.toml
-            gallery/**/*
+            examples/**/*
             src/**/*
       
 
