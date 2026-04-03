@@ -12,6 +12,27 @@
   draw_labels(edges, ..args)
 }
 
+/// Draws an Obisdian graph
+///
+/// ```typc
+/// draw(json("/example.canvas"))
+///
+/// draw(
+///   json("/testgraph.canvas"),
+///	  velocity: 0.1,
+///	  curve: false,
+///	  file-handlers: (
+///	    "jpg": (path: str, length: length, ..args) => {
+///	      image(path, width: length)
+///	    },
+///   ),
+///	)
+///
+/// ```
+///
+/// - data (dictionary): Parsed JSON Data of an Obsidian Graph.
+/// - velocity (float): Amount at which an edge "leaves" a node
+/// -> content
 #let draw_graph(
   data,
   velocity: 0.1,

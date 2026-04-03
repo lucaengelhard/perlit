@@ -78,3 +78,26 @@ This also means that other graphs can be imported into the graph:
 		</td>
 	</tr>
 </table>
+
+## Config
+
+Perlit exposes the following configuration options in the main `draw` function:
+
+```typ
+#draw(
+	json(path), 		
+	// Positonal argument for loading the graph data
+	
+	velocity: float, 	
+	// Amount at which an edge "leaves" a node (default: 0.1)
+
+	curve: bool,		
+	// Whether to use bezier curves or straight lines (default: false)
+
+	scale: float,	
+	//Scaling of the graph (default: 1)
+
+	file-handlers: dictionary 
+	// key-value pairs of file extensions and callback functions
+)
+```
